@@ -1,4 +1,5 @@
 from __version__ import __version__
+import yamaha
 import argparse
 
 if __name__ == '__main__':
@@ -9,7 +10,7 @@ if __name__ == '__main__':
     parser.add_argument('-z', '--zone', action='store', default='main',
         help='zone on which to execute all actions', dest='zone')
     parser.add_argument('-a', '--action', action='extend', required=True, nargs='+',
-        help='one or more actions to execute',
+        dest='actions', help='one or more actions to execute',
         choices=[
             'volume_up',
             'volume_down',
@@ -20,3 +21,6 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
 
+    for action in args.actions:
+        getattr(yamaha, action)(args)
+    
