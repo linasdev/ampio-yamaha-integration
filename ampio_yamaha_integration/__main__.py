@@ -1,4 +1,7 @@
 from __version__ import __version__
+from pyamaha import Device, Zone
+from requests.exceptions import ConnectionError
+import sys
 import yamaha
 import argparse
 
@@ -21,6 +24,15 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
 
-    for action in args.actions:
-        getattr(yamaha, action)(args)
+    device = Device(args.host)
+
+    try:
+        device.request(Zone.get_status(args.zone))
+    except ConnectionError:
+        print("Can't connect to host.", file=sys.stderr)
+    except AssertionError:
+        print("Invalid zone specified.", file=sys.stderr)
+    else:
+        for action in args.actions:
+            getattr(yamaha, action)(device, args)
     
