@@ -14,9 +14,9 @@ def main():
     parser.add_argument("--volume-down", help="decrease target device's volume by one step", action="count", default=0)
     parser.add_argument("--radio-next", help="play next radio station (input has to be 'net_radio')", action="count", default=0)
     parser.add_argument("--radio-prev", help="play previous radio station (input has to be 'net_radio')", action="count", default=0)
+    parser.add_argument("--set-input", help="set input", action="append", default=[], dest="input", nargs=2)
 
     args = parser.parse_args()
-
     device = Device(args.host)
 
     try:
@@ -37,5 +37,8 @@ def main():
 
         for _ in range(args.radio_prev):
             yamaha.radio_prev(device, args)
+
+        for [input, mode] in args.input:
+            yamaha.set_input(device, args, input, mode)
 
 main()

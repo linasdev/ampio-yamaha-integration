@@ -137,6 +137,11 @@ def radio_prev(dev, args):
         print("Can't play previous radio station (can't set list control).", file=stderr)
         return
 
+def set_input(dev, args, input, mode):
+    res = dev.request(Zone.set_input(args.zone, input, mode))
+    if res.status_code != 200 or res.json()["response_code"] != 0:
+        print("Can't set input.", file=stderr)
+
 def get_radio_list_info(dev, index=0):
     res = dev.request(NetUSB.get_list_info("net_radio", index, 8, "en", "main"))
     if res.status_code != 200 or res.json()["response_code"] != 0:
