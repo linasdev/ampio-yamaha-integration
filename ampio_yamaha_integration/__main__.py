@@ -17,8 +17,8 @@ if __name__ == '__main__':
         choices=[
             'volume_up',
             'volume_down',
-            'next',
-            'previous',
+            'radio_next',
+            'radio_previous',
         ])
     
     

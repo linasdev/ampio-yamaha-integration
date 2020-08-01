@@ -8,10 +8,10 @@ def volume_up(dev, args):
 def volume_down(dev, args):
     dev.request(Zone.set_volume(args.zone, 'down', None))
 
-def next(dev, args):
+def radio_next(dev, args):
     (host, zone) = args.host, args.zone
-    print("Next! To host '" + host + "' and zone '" + zone + "'")
+    print("Radio next! To host '" + host + "' and zone '" + zone + "'")
 
-def previous(dev, args):
+def radio_previous(dev, args):
     (host, zone) = args.host, args.zone
-    print("Previous! To host '" + host + "' and zone '" + zone + "'")
+    print("Radio previous! To host '" + host + "' and zone '" + zone + "'")
