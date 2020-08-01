@@ -8,18 +8,12 @@ from sys import stderr
 def main():
     parser = ArgumentParser(description="Controls a Yamaha MusicCast device")
     parser.add_argument("-v", "--version", action="version", version="Ampio Yamaha Integration " + __version__)
-    parser.add_argument("-d", "--device", action="store", required=True,
-        help="target device's IP address or hostname", dest="host")
-    parser.add_argument("-z", "--zone", action="store", default="main",
-        help="target zone", dest="zone")
-    parser.add_argument("-a", "--action", action="extend", required=True, nargs="+",
-        dest="actions", help="one or more actions to execute",
-        choices=[
-            "volume_up",
-            "volume_down",
-            "radio_next",
-            "radio_previous",
-        ])
+    parser.add_argument("-z", "--zone", help="target zone (default: main)", action="store", default="main")
+    parser.add_argument("host", help="target device's IP address or hostname", action="store")
+    parser.add_argument("--volume-up", help="increase target device's volume by one step", action="count", default=0)
+    parser.add_argument("--volume-down", help="decrease target device's volume by one step", action="count", default=0)
+    parser.add_argument("--radio-next", help="play next radio station (input has to be 'net_radio')", action="count", default=0)
+    parser.add_argument("--radio-prev", help="play previous radio station (input has to be 'net_radio')", action="count", default=0)
 
     args = parser.parse_args()
 
@@ -32,7 +26,16 @@ def main():
     except AssertionError:
         print("Invalid zone specified.", file=stderr)
     else:
-        for action in args.actions:
-            getattr(yamaha, action)(device, args)
+        for _ in range(args.volume_up):
+            yamaha.volume_up(device, args)
+
+        for _ in range(args.volume_down):
+            yamaha.volume_down(device, args)
+
+        for _ in range(args.radio_next):
+            yamaha.radio_next(device, args)
+
+        for _ in range(args.radio_prev):
+            yamaha.radio_prev(device, args)
 
 main()
