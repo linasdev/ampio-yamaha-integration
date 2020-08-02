@@ -12,8 +12,8 @@ def main():
     parser.add_argument("host", help="target device's IP address or hostname", action="store")
     parser.add_argument("--volume-up", help="increase target device's volume by one step", action="count", default=0)
     parser.add_argument("--volume-down", help="decrease target device's volume by one step", action="count", default=0)
-    parser.add_argument("--radio-next", help="play next radio station (input has to be 'net_radio')", action="count", default=0)
-    parser.add_argument("--radio-prev", help="play previous radio station (input has to be 'net_radio')", action="count", default=0)
+    parser.add_argument("--next", help="play next track / radio station (depends on input)", action="count", default=0)
+    parser.add_argument("--prev", help="play previous track / radio station (depends on input)", action="count", default=0)
     parser.add_argument("--set-input", help="set input", action="append", default=[], dest="inputs", nargs=2)
     parser.add_argument("--set-playback", help="set playback", action="append", default=[], dest="playback")
     parser.add_argument("--set-power", help="set power", action="append", default=[], dest="power")
@@ -35,11 +35,11 @@ def main():
         for _ in range(args.volume_down):
             yamaha.volume_down(device, args)
 
-        for _ in range(args.radio_next):
-            yamaha.radio_next(device, args)
+        for _ in range(args.next):
+            yamaha.next(device, args)
 
-        for _ in range(args.radio_prev):
-            yamaha.radio_prev(device, args)
+        for _ in range(args.prev):
+            yamaha.prev(device, args)
 
         for [input, mode] in args.inputs:
             yamaha.set_input(device, args, input, mode)
