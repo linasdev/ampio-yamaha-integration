@@ -13,6 +13,7 @@ pyamaha = "^0.3"
 argparse = "^1.4.0"
 
 [tool.poetry.dev-dependencies]
+nuitka = "^0.6.8"
 
 [build-system]
 requires = ["poetry>=0.12"]
