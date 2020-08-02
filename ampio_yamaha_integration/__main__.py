@@ -17,6 +17,7 @@ def main():
     parser.add_argument("--set-input", help="set input", action="append", default=[], dest="inputs", nargs=2)
     parser.add_argument("--set-playback", help="set playback", action="append", default=[], dest="playback")
     parser.add_argument("--set-power", help="set power", action="append", default=[], dest="power")
+    parser.add_argument("--toggle-input", help="toggle between playing on the target input and power standby", action="append", default=[], dest="toggle", nargs=2)
 
     args = parser.parse_args()
     device = Device(args.host)
@@ -48,5 +49,8 @@ def main():
 
         for power in args.power:
             yamaha.set_power(device, args, power)
+
+        for [input, mode] in args.toggle:
+            yamaha.toggle_input(device, args, input, mode)
 
 main()
