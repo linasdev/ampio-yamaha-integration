@@ -142,6 +142,16 @@ def set_input(dev, args, input, mode):
     if res.status_code != 200 or res.json()["response_code"] != 0:
         print("Can't set input.", file=stderr)
 
+def set_playback(dev, args, playback):
+    res = dev.request(NetUSB.set_playback(playback))
+    if res.status_code != 200 or res.json()["response_code"] != 0:
+        print("Can't set playback.", file=stderr)
+
+def set_power(dev, args, power):
+    res = dev.request(Zone.set_power(args.zone, power))
+    if res.status_code != 200 or res.json()["response_code"] != 0:
+        print("Can't set device's power.", file=stderr)
+
 def get_radio_list_info(dev, index=0):
     res = dev.request(NetUSB.get_list_info("net_radio", index, 8, "en", "main"))
     if res.status_code != 200 or res.json()["response_code"] != 0:
